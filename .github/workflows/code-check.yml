@@ -20,9 +20,8 @@ jobs:
       mongodb:
         # Docker Hub image
         image: mongo:3.4.4
-        # Provide the password for postgres
         ports:
-          # Maps tcp port 5432 on service container to the host
+          # Maps tcp port 27017 on service container to the host
           - 27017:27017
 
     steps:
