@@ -1,19 +1,36 @@
-FROM python:3.4.5-slim
+FROM ubuntu:20.04
 
-## make a local directory
-RUN mkdir /counter_app
+# Install packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    make \
+    gcc \
+    git \
+    unzip \
+    wget \
+    python3-dev \
+    python3-pip \
+    python-is-python3 
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=on
+
+# Install poetry
+RUN pip3 install poetry
 
 # set "counter_app" as the working directory from which CMD, RUN, ADD references
 WORKDIR /counter_app
 
-# now copy all the files in this directory to /code
-ADD . .
+# setup poetry
+COPY pyproject.toml /counter_app/
+RUN poetry config virtualenvs.create true \
+    && poetry config virtualenvs.in-project false \
+    && poetry install --no-interaction
 
-# pip install the local requirements.txt
-RUN pip install -r requirements.txt
+# now copy all the files in this directory to /code
+COPY . .
 
 # Listen to port 5000 at runtime
 EXPOSE 5000
 
 # Define our command to be run when launching the container
-CMD gunicorn wsgi:app --workers 4 --timeout 120 --bind 0.0.0.0:$PORT --reload
+CMD poetry run flask run --host 0.0.0.0
