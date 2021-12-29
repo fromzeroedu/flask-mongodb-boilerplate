@@ -1,0 +1,32 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Quart",
+      "type": "python",
+      "request": "launch",
+      "module": "quart",
+      "env": {
+        "QUART_APP": "manage.py",
+        "QUART_ENV": "development",
+      },
+      "args": [
+        "run",
+        "--host",
+        "0.0.0.0"
+      ],
+      "jinja": true
+    },
+    {
+      "name": "Python: Test debug config",
+      "type": "python",
+      "request": "launch",
+      "module": "pytest",
+      "console": "integratedTerminal",
+      "logToFile": true
+    },
+  ]
+}
