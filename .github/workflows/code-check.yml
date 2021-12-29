@@ -61,4 +61,4 @@ jobs:
         env:
           FLASK_ENV: testing
           MONGODB_HOST: localhost
-          MONGODB_DB: counter_test
+          MONGODB_DB: counter
