@@ -14,7 +14,6 @@ def test_second_response(create_test_app, create_test_client):
     # Counter 1
     response = create_test_client.get("/")
     body = response.get_data()
-    breakpoint()
 
     # Counter 2
     response = create_test_client.get("/")
