@@ -2,9 +2,10 @@ from flask import Blueprint
 
 from counter.models import Counter
 
-counter_app = Blueprint('counter_app', __name__)
+counter_app = Blueprint("counter_app", __name__)
 
-@counter_app.route('/')
+
+@counter_app.route("/")
 def init():
     counter = Counter.objects.all().first()
     if counter:
