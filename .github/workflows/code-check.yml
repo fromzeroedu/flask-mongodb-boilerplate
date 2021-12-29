@@ -1,0 +1,75 @@
+# This runs code checks on each commit
+name: Code Checks
+on:
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        # checks all of the versions allowed in pyproject.toml
+        python-version: [3.7, 3.8, 3.9]
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: app_user
+          POSTGRES_PASSWORD: app_password
+          POSTGRES_DB: app
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+    steps:
+      # installs python
+      # one execution of the tests per version listed above
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # installs poetry
+      - name: Install poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.1.8
+          virtualenvs-create: true
+          virtualenvs-in-project: false
+          installer-parallel: true
+          virtualenvs-path: /tmp/poetry/venv/${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run Black
+        run: |
+          poetry run black --check --line-length=80 .
+        
+      - name: Run mypy
+        run: |
+          poetry run mypy --ignore-missing-imports .   
+      
+      - name: Run tests
+        run: |
+          poetry run pytest
+        env:
+          QUART_ENV: testing
+          DB_USERNAME: app_user
+          DB_PASSWORD: app_password
+          DB_HOST: localhost
