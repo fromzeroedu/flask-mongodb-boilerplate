@@ -1,5 +1,5 @@
 export PORT=5000
 export SECRET_KEY='you-will-never-guess'
 export DEBUG=True
-MONGODB_HOST=localhost
+MONGODB_HOST=mongodb
 MONGODB_DB=counter

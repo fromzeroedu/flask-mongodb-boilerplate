@@ -5,17 +5,20 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - /opt/flask-mongodb-boilerplate:/counter_app
+      - ./:/counter_app
     links:
       - db:mongodb
-    container_name: counterappmongodb_web_1
+    container_name: app_web_1
     depends_on:
       - db
+    stdin_open: true
+    tty: true
     environment:
-        PORT: 5000
-        SECRET_KEY: 'you-will-never-guess'
-        MONGODB_HOST: mongodb
-        MONGODB_DB: counter
+      PORT: 5000
+      SECRET_KEY: "you-will-never-guess"
+      DEBUG: 1 # can't pass True here, but 1 works
+      MONGODB_HOST: mongodb
+      MONGODB_DB: counter      
   db:
     image: mongo:3.4.4
-    container_name: counterappmongodb_db_1
+    container_name: app_db_1
