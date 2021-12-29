@@ -60,5 +60,5 @@ jobs:
           poetry run pytest
         env:
           FLASK_ENV: testing
-          MONGODB_HOST: mongodb
-          MONGODB_DB": counter_test
+          MONGODB_HOST: localhost
+          MONGODB_DB: counter_test
