@@ -17,23 +17,13 @@ jobs:
 
     services:
       # Label used to access the service container
-      postgres:
+      mongodb:
         # Docker Hub image
-        image: postgres
+        image: mongo:3.4.4
         # Provide the password for postgres
-        env:
-          POSTGRES_USER: app_user
-          POSTGRES_PASSWORD: app_password
-          POSTGRES_DB: app
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
         ports:
           # Maps tcp port 5432 on service container to the host
-          - 5432:5432
+          - 27017:27017
 
     steps:
       # installs python
@@ -69,7 +59,6 @@ jobs:
         run: |
           poetry run pytest
         env:
-          QUART_ENV: testing
-          DB_USERNAME: app_user
-          DB_PASSWORD: app_password
-          DB_HOST: localhost
+          FLASK_ENV: testing
+          MONGODB_HOST: mongodb
+          MONGODB_DB": counter_test

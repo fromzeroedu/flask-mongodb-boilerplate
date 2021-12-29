@@ -15,8 +15,8 @@ def create_db():
     db_test_name = os.environ["MONGODB_DB"] + "_test"
     db_host = os.environ["MONGODB_HOST"]
 
-    # drop database if exists from previous run
-    # TODO
+    # there's no need to drop the database prior if unhealthy
+    # since it's dropped automatically after tests are run
 
     # TESTING flag disables error catching during request handling,
     # so that you get better error reports when performing test requests
