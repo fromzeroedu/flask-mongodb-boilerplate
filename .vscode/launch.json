@@ -10,8 +10,8 @@
       "request": "launch",
       "module": "flask",
       "env": {
-        "QUART_APP": "manage.py",
-        "QUART_ENV": "development",
+        "FLASK_APP": "manage.py",
+        "FLASK_ENV": "development",
       },
       "args": [
         "run",
