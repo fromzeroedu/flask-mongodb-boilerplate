@@ -14,11 +14,11 @@ services:
     stdin_open: true
     tty: true
     environment:
-      PORT: 5000
+      FLASK_APP: manage.py
+      FLASK_ENV: development
       SECRET_KEY: "you-will-never-guess"
-      DEBUG: 1 # can't pass True here, but 1 works
       MONGODB_HOST: mongodb
-      MONGODB_DB: counter      
+      MONGODB_DB: app      
   db:
     image: mongo:3.4.4
     container_name: app_db_1
