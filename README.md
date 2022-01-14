@@ -13,7 +13,7 @@ This is a boilerplate for a MongoDB Flask app that can run as a local poetry-bas
 
 ## Production
 
-- Use Hypercorn `hypercorn --bind 0.0.0.0:$PORT --reload wsgi:app`
+- Use Gunicorn `gunicorn --bind 0.0.0.0:$PORT --reload wsgi:app`
 
 ## Codespaces
 
